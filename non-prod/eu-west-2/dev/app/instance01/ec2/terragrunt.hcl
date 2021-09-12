@@ -33,8 +33,7 @@ inputs = {
 
   user_data = <<EOF
 #! /bin/bash
-sudo apt-get update
-echo "Deployed via Terraform!" >> /tmp/terraform_file
+echo "Deployed with Terraform!" >> /tmp/terraform_file
 sudo apt update
 sudo apt install docker docker-compose -y
 cd ~
@@ -46,16 +45,9 @@ echo "MYSQL_URL=${dependency.database.outputs.db_instance_address}" >> python-ap
 cd python-app; docker-compose up -d
 EOF
 
-
-// provisioner "file" {
-//   echo "MYSQL_URL=${dependency.ec2-security-group.outputs.security_group_id}" >> /tmp/envfile
-//     content = element(data.template_file.index.[*].rendered, count.index)
-//     destination = "~/python-app/app/src/.env"
-//   }
-
   tags = {
     Terraform   = "true"
-    Environment = "dev"
+    Environment = local.env_vars.locals.name
   }
 
 
