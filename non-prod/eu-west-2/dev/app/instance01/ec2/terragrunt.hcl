@@ -34,14 +34,15 @@ inputs = {
   user_data = <<EOF
 #! /bin/bash
 sudo apt-get update
-echo "Deployed via Terraform!" >> /tmp/this_terraform_file
+echo "Deployed via Terraform!" >> /tmp/terraform_file
 sudo apt update
-sudo apt install install docker docker-compose
+sudo apt install docker docker-compose -y
 cd ~
 git clone https://github.com/partha005/python-app.git
-echo "MYSQL_DATABASE=example" >> ~/python-app/app/src/.env
-echo "MYSQL_ROOT_PASSWORD=test12345" >> ~/python-app/app/src/.env
-echo "MYSQL_URL=${dependency.database.outputs.db_instance_address}" >> ~/python-app/app/src/.env
+>python-app/app/src/.env
+echo "MYSQL_DATABASE=example" >> python-app/app/src/.env
+echo "MYSQL_ROOT_PASSWORD=test12345" >> python-app/app/src/.env
+echo "MYSQL_URL=${dependency.database.outputs.db_instance_address}" >> python-app/app/src/.env
 cd python-app; docker-compose up -d
 EOF
 
