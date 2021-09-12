@@ -25,8 +25,8 @@ inputs = {
   major_engine_version = "5.7"
   instance_class       = "db.t2.small"
 
-  allocated_storage     = 10
-  max_allocated_storage = 30
+  allocated_storage     = 5
+  max_allocated_storage = 10
 
 
   name     = "example"
