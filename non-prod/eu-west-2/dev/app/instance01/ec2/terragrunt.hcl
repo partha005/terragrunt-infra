@@ -16,6 +16,10 @@ dependency "ec2-security-group" {
   config_path = "../ec2-security-group"
 }
 
+dependency "database" {
+  config_path = "../database"
+}
+
 inputs = {
 
   name         = join("-", [local.app_vars.locals.name,local.instance_vars.locals.name,local.env_vars.locals.name])
