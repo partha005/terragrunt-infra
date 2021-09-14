@@ -5,6 +5,7 @@ terraform {
 locals {
   app_vars      = read_terragrunt_config(find_in_parent_folders("app.hcl"))
   instance_vars = read_terragrunt_config(find_in_parent_folders("instance.hcl"))
+  env_vars      = read_terragrunt_config(find_in_parent_folders("env.hcl"))
 }
 
 include {
@@ -13,7 +14,7 @@ include {
 
 
 inputs = {
-  name        = join("-", [local.app_vars.locals.name,local.instance_vars.locals.name])
+  name        = join("-", [local.app_vars.locals.name,local.instance_vars.locals.name,local.env_vars.locals.name])
   description = "EC2 Security group"
 
   ingress_with_cidr_blocks = [
@@ -47,11 +48,13 @@ inputs = {
     }
     ]
 
-    egress = {
+    egress_with_cidr_blocks = [
+    {
       from_port  = 0
       to_port = 65535
       protocol = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+      cidr_blocks = "0.0.0.0/0"
     }
+    ]
 
 }

@@ -5,6 +5,7 @@ terraform {
 locals {
   app_vars      = read_terragrunt_config(find_in_parent_folders("app.hcl"))
   instance_vars = read_terragrunt_config(find_in_parent_folders("instance.hcl"))
+  env_vars      = read_terragrunt_config(find_in_parent_folders("env.hcl"))
 }
 
 include {
@@ -13,7 +14,7 @@ include {
 
 
 inputs = {
-  name        = join("-", [local.app_vars.locals.name,local.instance_vars.locals.name,"db"])
+  name        = join("-", [local.app_vars.locals.name,local.instance_vars.locals.name,local.env_vars.locals.name])
   description = "RDS Security group"
 
   ingress_with_cidr_blocks = [
